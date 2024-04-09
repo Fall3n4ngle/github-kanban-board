@@ -5,31 +5,57 @@ import {
   FormLabel,
   VisuallyHidden,
   HStack,
+  FormErrorMessage,
 } from "@chakra-ui/react";
-import { FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { useAppDispatch } from "../../app/hooks";
+import { fetchRepo } from "./reposSlice";
+import { extractRepoDetails } from "./utils";
 
 export default function SearchForm() {
   const [repoUrl, setRepoUrl] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+
+    if (extractRepoDetails(value) && error) {
+      setError(null);
+    }
+
+    setRepoUrl(value);
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    setError(null);
+    const details = extractRepoDetails(repoUrl);
+
+    if (!details) {
+      setError("Invalid repo url");
+      return;
+    }
+
+    dispatch(fetchRepo({ owner: "facebook", repo: "react" }));
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <HStack>
-        <FormControl>
+      <FormControl isRequired isInvalid={!!error}>
+        <HStack>
           <VisuallyHidden>
             <FormLabel>Github repo url</FormLabel>
           </VisuallyHidden>
           <Input
             placeholder="Enter repo url"
             value={repoUrl}
-            onChange={(e) => setRepoUrl(e.target.value)}
+            onChange={handleChange}
           />
-        </FormControl>
-        <Button type="submit">Load issues</Button>
-      </HStack>
+          <Button type="submit">Load issues</Button>
+        </HStack>
+        {error && <FormErrorMessage>{error}</FormErrorMessage>}
+      </FormControl>
     </form>
   );
 }

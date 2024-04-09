@@ -1,8 +1,4 @@
-import {
-  createAsyncThunk,
-  createEntityAdapter,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 type Owner = {
   login: string;
@@ -17,21 +13,17 @@ type Repo = {
   owner: Owner;
 };
 
-const reposAdapter = createEntityAdapter({
-  selectId: (repo: Repo) => repo.id,
-});
-
-
 type State = {
   isLoading: boolean;
   error: string | null;
+  repo: Repo | null;
 };
 
 export const fetchRepo = createAsyncThunk(
   "repos/fetch",
   async (
     { owner, repo }: { owner: string; repo: string },
-    { rejectWithValue, fulfillWithValue }
+    { rejectWithValue }
   ) => {
     try {
       const response = await fetch(
@@ -44,16 +36,18 @@ export const fetchRepo = createAsyncThunk(
 
       const result: Repo = await response.json();
 
-      return fulfillWithValue({
-        id: `${owner}_${repo}`,
-        name: result.name,
-        owner: {
-          login: result.owner.login,
-          url: result.owner.url,
-        },
-        stargazers_count: result.stargazers_count,
-        url: result.url,
-      } as Repo);
+      return {
+        repo: {
+          id: `${owner}_${repo}`,
+          name: result.name,
+          owner: {
+            login: result.owner.login,
+            url: result.owner.url,
+          },
+          stargazers_count: result.stargazers_count,
+          url: result.url,
+        } as Repo,
+      };
     } catch (error) {
       rejectWithValue("Failed to fetch repository");
     }
@@ -62,10 +56,11 @@ export const fetchRepo = createAsyncThunk(
 
 export const reposSlice = createSlice({
   name: "repos",
-  initialState: reposAdapter.getInitialState<State>({
+  initialState: {
     isLoading: false,
     error: null,
-  }),
+    repo: null,
+  } as State,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchRepo.pending, (state) => {
@@ -75,7 +70,7 @@ export const reposSlice = createSlice({
 
     builder.addCase(fetchRepo.fulfilled, (state, action) => {
       state.isLoading = false;
-      reposAdapter.addOne(state, action.payload as Repo);
+      state.repo = action.payload?.repo ?? null;
     });
 
     builder.addCase(fetchRepo.rejected, (state, action) => {
@@ -84,5 +79,3 @@ export const reposSlice = createSlice({
     });
   },
 });
-
-export const { selectById } = reposAdapter.getSelectors();
