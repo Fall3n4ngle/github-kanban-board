@@ -1,14 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
 
 type Owner = {
   login: string;
-  url: string;
+  html_url: string;
 };
 
 type Repo = {
   id: string;
   name: string;
-  url: string;
+  html_url: string;
   stargazers_count: number;
   owner: Owner;
 };
@@ -42,10 +43,10 @@ export const fetchRepo = createAsyncThunk(
           name: result.name,
           owner: {
             login: result.owner.login,
-            url: result.owner.url,
+            html_url: result.owner.html_url,
           },
           stargazers_count: result.stargazers_count,
-          url: result.url,
+          html_url: result.html_url,
         } as Repo,
       };
     } catch (error) {
@@ -79,3 +80,7 @@ export const reposSlice = createSlice({
     });
   },
 });
+
+export const getRepoStatus = (state: RootState) => state.repos.isLoading;
+export const getRepoError = (state: RootState) => state.repos.error;
+export const getRepo = (state: RootState) => state.repos.repo;

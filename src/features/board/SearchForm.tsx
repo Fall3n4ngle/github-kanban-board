@@ -25,7 +25,7 @@ export default function SearchForm() {
     }
 
     setRepoUrl(value);
-  }
+  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ export default function SearchForm() {
       return;
     }
 
-    dispatch(fetchRepo({ owner: "facebook", repo: "react" }));
+    dispatch(fetchRepo({ owner: details.owner, repo: details.repo }));
   };
 
   return (
