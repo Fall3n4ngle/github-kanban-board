@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { reposSlice } from "../features/board/reposSlice";
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    [reposSlice.reducerPath]: reposSlice.reducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
