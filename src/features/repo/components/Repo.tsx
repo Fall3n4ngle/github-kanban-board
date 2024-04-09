@@ -4,11 +4,9 @@ import SearchForm from "./SearchForm";
 
 export default function Board() {
   return (
-    <div>
-      <Stack spacing={4}>
-        <SearchForm />
-        <RepoInfo />
-      </Stack>
-    </div>
+    <Stack spacing={4}>
+      <SearchForm />
+      <RepoInfo />
+    </Stack>
   );
 }

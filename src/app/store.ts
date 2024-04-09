@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { reposSlice } from "../features/board/reposSlice";
+import { reposSlice } from "../features/repo";
 
 export const store = configureStore({
   reducer: {

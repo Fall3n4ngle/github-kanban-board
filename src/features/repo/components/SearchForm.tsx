@@ -8,9 +8,9 @@ import {
   FormErrorMessage,
 } from "@chakra-ui/react";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useAppDispatch } from "../../app/hooks";
-import { fetchRepo } from "./reposSlice";
-import { extractRepoDetails } from "./utils";
+import { useAppDispatch } from "../../../app/hooks";
+import { fetchRepo } from "../store/reposSlice";
+import { extractRepoDetails } from "../utils";
 
 export default function SearchForm() {
   const [repoUrl, setRepoUrl] = useState("");
