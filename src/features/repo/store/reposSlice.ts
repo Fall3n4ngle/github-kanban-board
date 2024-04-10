@@ -31,6 +31,11 @@ export const fetchRepo = createAsyncThunk(
     try {
       const response = await fetch(
         `https://api.github.com/repos/${owner}/${repo}`,
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_PAT}`,
+          },
+        }
       );
 
       if (!response.ok) {
@@ -87,6 +92,6 @@ export const reposSlice = createSlice({
   },
 });
 
-export const getRepoStatus = (state: RootState) => state.repos.isLoading;
-export const getRepoError = (state: RootState) => state.repos.error;
-export const getRepo = (state: RootState) => state.repos.repo;
+export const selectRepoStatus = (state: RootState) => state.repos.isLoading;
+export const selectRepoError = (state: RootState) => state.repos.error;
+export const selectRepo = (state: RootState) => state.repos.repo;

@@ -1,17 +1,18 @@
 import { Container } from "@chakra-ui/react";
 import { Repo } from "./features/repo";
-import { useEffect } from "react";
+import { Board } from "./features/issues";
 
 function App() {
-  useEffect(() => {
-    fetch("https://api.github.com/repos/facebook/react/issues?state=all")
-      .then((res) => res.json())
-      .then(console.log);
-  }, []);
-
   return (
-    <Container maxW="6xl" py={30}>
+    <Container
+      maxW="container.xl"
+      py={30}
+      display="flex"
+      flexDirection="column"
+      gap={10}
+    >
       <Repo />
+      <Board />
     </Container>
   );
 }

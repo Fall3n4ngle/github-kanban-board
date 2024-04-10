@@ -1,34 +1,17 @@
 import {
   createAsyncThunk,
   createEntityAdapter,
+  createSelector,
   createSlice,
 } from "@reduxjs/toolkit";
 import { getRepoId } from "../../../utils";
-import { getIssueStatus } from "../utils/getIssueStatus";
-
-type BaseIssue = {
-  id: number;
-  title: string;
-  number: number;
-  createdAt: Date;
-  user: {
-    login: string;
-  };
-  comments: number;
-};
-
-export type GuthubIssueStatus = "open" | "closed";
+import { getIssueStatus } from "../utils";
+import { BaseIssue, GuthubIssueStatus, Issue, IssueStatus } from "../types";
+import { RootState } from "../../../app/store";
 
 type GuthubIssue = BaseIssue & {
   state: GuthubIssueStatus;
   assignee: null | object;
-};
-
-export type StateIssueStatus = "todo" | "in_progress" | "done";
-
-type StateIssue = BaseIssue & {
-  repoId: string;
-  state: StateIssueStatus;
 };
 
 export const fetchIssues = createAsyncThunk(
@@ -40,6 +23,11 @@ export const fetchIssues = createAsyncThunk(
     try {
       const response = await fetch(
         `https://api.github.com/repos/${owner}/${repo}/issues?state=all`,
+        {
+          headers: {
+            Authorization: `Bearer ${import.meta.env.VITE_PAT}`,
+          },
+        }
       );
 
       if (!response.ok) {
@@ -56,7 +44,7 @@ export const fetchIssues = createAsyncThunk(
 
         return {
           comments: issue.comments,
-          createdAt: issue.createdAt,
+          created_at: issue.created_at,
           id: issue.id,
           number: issue.number,
           title: issue.title,
@@ -65,7 +53,7 @@ export const fetchIssues = createAsyncThunk(
             login: issue.user.login,
           },
           repoId: getRepoId({ owner, repo }),
-        } as StateIssue;
+        } as Issue;
       });
     } catch {
       rejectWithValue("Failed to fetch issues");
@@ -73,7 +61,7 @@ export const fetchIssues = createAsyncThunk(
   }
 );
 
-const issuesAdapter = createEntityAdapter<StateIssue>();
+const issuesAdapter = createEntityAdapter<Issue>();
 
 type State = {
   isLoading: boolean;
@@ -95,7 +83,7 @@ export const issuesSlice = createSlice({
 
     builder.addCase(fetchIssues.fulfilled, (state, action) => {
       state.isLoading = false;
-      issuesAdapter.addMany(state, action.payload as StateIssue[]);
+      issuesAdapter.addMany(state, action.payload as Issue[]);
     });
 
     builder.addCase(fetchIssues.rejected, (state, { payload }) => {
@@ -104,3 +92,23 @@ export const issuesSlice = createSlice({
     });
   },
 });
+
+const { selectAll } = issuesAdapter.getSelectors();
+
+type Filters = {
+  repoId: string;
+  status: IssueStatus;
+};
+
+export const selectIssuesByStatus = createSelector(
+  selectAll,
+  (_: unknown, { repoId, status }: Filters) => ({ repoId, status }),
+  (issues, { repoId, status }) => {
+    return issues.filter(
+      (issue) => issue.repoId === repoId && issue.state === status
+    );
+  }
+);
+
+export const selectIssuesStatus = (state: RootState) => state.issues.isLoading;
+export const selectIssuesError = (state: RootState) => state.issues.error;
