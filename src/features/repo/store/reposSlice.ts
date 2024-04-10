@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../app/store";
+import { getRepoId } from "../../../utils";
+import { fetchIssues } from "../../issues";
 
 type Owner = {
   login: string;
@@ -24,22 +26,26 @@ export const fetchRepo = createAsyncThunk(
   "repos/fetch",
   async (
     { owner, repo }: { owner: string; repo: string },
-    { rejectWithValue }
+    { rejectWithValue, dispatch }
   ) => {
     try {
       const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}`
+        `https://api.github.com/repos/${owner}/${repo}`,
       );
 
       if (!response.ok) {
         throw new Error();
       }
 
-      const result: Repo = await response.json();
+      const result: Repo & { has_issues: boolean } = await response.json();
+      
+      if (result.has_issues) {
+        dispatch(fetchIssues({ repo, owner }));
+      }
 
       return {
         repo: {
-          id: `${owner}_${repo}`,
+          id: getRepoId({ owner, repo }),
           name: result.name,
           owner: {
             login: result.owner.login,
@@ -49,7 +55,7 @@ export const fetchRepo = createAsyncThunk(
           html_url: result.html_url,
         } as Repo,
       };
-    } catch (error) {
+    } catch {
       rejectWithValue("Failed to fetch repository");
     }
   }
