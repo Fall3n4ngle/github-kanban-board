@@ -1,4 +1,4 @@
-export type BaseIssue = {
+export type Issue = {
   id: number;
   title: string;
   number: number;
@@ -10,10 +10,4 @@ export type BaseIssue = {
 };
 
 export type IssueStatus = "todo" | "in_progress" | "done";
-
-export type Issue = BaseIssue & {
-  repoId: string;
-  state: IssueStatus;
-};
-
-export type GuthubIssueStatus = "open" | "closed";
+export type GuthubIssueState = "open" | "closed";

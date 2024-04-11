@@ -1,7 +1,7 @@
-import { GuthubIssueStatus, IssueStatus } from "../types";
+import { GuthubIssueState, IssueStatus } from "../types";
 
 type Props = {
-  status: GuthubIssueStatus;
+  status: GuthubIssueState;
   assignee: null | object;
 };
 

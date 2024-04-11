@@ -7,6 +7,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { selectIssuesStatus } from "../store";
 import ColumnSkeleton from "./ColumnSkeleton";
 import { IssueStatus } from "../types";
+import { getIssuesKey } from "../utils";
 
 type TColumn = {
   issuesStatus: IssueStatus;
@@ -24,14 +25,6 @@ export default function Board() {
   const isIssuesLoading = useAppSelector(selectIssuesStatus);
   const isRepoLoading = useAppSelector(selectRepoStatus);
 
-  if (!repo) {
-    return (
-      <Heading textAlign="center" fontSize="x-large">
-        Enter repo url to load issues
-      </Heading>
-    );
-  }
-
   if (isIssuesLoading || isRepoLoading) {
     <SimpleGrid columns={3} spacing={4}>
       {columns.map((column, index) => (
@@ -40,12 +33,31 @@ export default function Board() {
     </SimpleGrid>;
   }
 
+  if (!repo) {
+    return (
+      <Heading textAlign="center" fontSize="x-large">
+        Enter repo url to load issues
+      </Heading>
+    );
+  }
+
   return (
     <DndProvider backend={HTML5Backend}>
       <SimpleGrid columns={3} spacing={4}>
-        {columns.map((column) => (
-          <Column key={column.issuesStatus} {...column} repoId={repo.id} />
-        ))}
+        {columns.map((column) => {
+          const issuesKey = getIssuesKey({
+            repoId: repo.id,
+            status: column.issuesStatus,
+          });
+
+          return (
+            <Column
+              key={issuesKey}
+              issuesKey={issuesKey}
+              title={column.title}
+            />
+          );
+        })}
       </SimpleGrid>
     </DndProvider>
   );
