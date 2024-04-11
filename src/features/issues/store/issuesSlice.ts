@@ -61,9 +61,21 @@ const issuesSlice = createSlice({
       const inProgressKey = getIssuesKey({ repoId, status: "in_progress" });
       const doneKey = getIssuesKey({ repoId, status: "done" });
 
-      state.data[todoKey] = [];
-      state.data[inProgressKey] = [];
-      state.data[doneKey] = [];
+      if (!state.data[todoKey]) {
+        state.data[todoKey] = [];
+      }
+      if (!state.data[inProgressKey]) {
+        state.data[inProgressKey] = [];
+      }
+      if (!state.data[doneKey]) {
+        state.data[doneKey] = [];
+      }
+
+      const sets = {
+        [todoKey]: new Set(state.data[todoKey].map((i) => i.id)),
+        [inProgressKey]: new Set(state.data[inProgressKey].map((i) => i.id)),
+        [doneKey]: new Set(state.data[doneKey].map((i) => i.id)),
+      };
 
       issues.forEach((issue) => {
         const status = getIssueStatus({
@@ -72,7 +84,8 @@ const issuesSlice = createSlice({
         });
 
         const key = getIssuesKey({ status, repoId });
-        const set = new Set(state.data[key]);
+        if (sets[key].has(issue.id)) return;
+
         const newIssue = {
           id: issue.id,
           title: issue.title,
@@ -82,9 +95,7 @@ const issuesSlice = createSlice({
           user: issue.user,
         };
 
-        if (!set.has(newIssue)) {
-          state.data[key].push(newIssue);
-        }
+        state.data[key].push(newIssue);
       });
     });
 
