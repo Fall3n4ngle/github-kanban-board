@@ -1,47 +1,7 @@
-import {
-  PayloadAction,
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit";
-import { Issue, GuthubIssueState } from "../types";
-import { RootState } from "../../../app/store";
-import { getRepoId } from "../../../utils";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Issue } from "../types";
 import { getIssueStatus, getIssuesKey } from "../utils";
-
-type GuthubIssue = Issue & {
-  state: GuthubIssueState;
-  assignee: null | object;
-};
-
-export const fetchIssues = createAsyncThunk(
-  "issues/fetch",
-  async (
-    { owner, repo }: { owner: string; repo: string },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/issues?state=all`,
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_PAT}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("");
-      }
-
-      const issues: GuthubIssue[] = await response.json();
-      const repoId = getRepoId({ owner, repo });
-      return { issues, repoId };
-    } catch {
-      rejectWithValue("Failed to fetch issues");
-    }
-  }
-);
+import { fetchIssues } from "./thunks";
 
 type State = {
   isLoading: boolean;
@@ -49,7 +9,7 @@ type State = {
   data: Record<string, Issue[]>;
 };
 
-export const issuesSlice = createSlice({
+const issuesSlice = createSlice({
   name: "issues",
   initialState: {
     error: null,
@@ -124,11 +84,5 @@ export const issuesSlice = createSlice({
 });
 
 export const { changeIssueStatus } = issuesSlice.actions;
-
-export const selectIssuesStatus = (state: RootState) => state.issues.isLoading;
-export const selectIssuesError = (state: RootState) => state.issues.error;
-export const selectIssuesByKey = createSelector(
-  (state: RootState) => state.issues.data,
-  (_: RootState, issuesKey: string) => issuesKey,
-  (issues, issuesKey) => issues[issuesKey]
-);
+export const { reducer: issuesReducer, reducerPath: issuesReducerPath } =
+  issuesSlice;

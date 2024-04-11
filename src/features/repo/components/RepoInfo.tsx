@@ -1,5 +1,5 @@
 import { useAppSelector } from "../../../app/hooks";
-import { selectRepo, selectRepoStatus } from "../store/reposSlice";
+import { selectRepo, selectRepoStatus } from "../store";
 import { HStack, Link, Text, Skeleton } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { formatStarsCount } from "../utils";

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useAppDispatch } from "../../../app/hooks";
-import { fetchRepo } from "../store/reposSlice";
+import { fetchRepo } from "../store";
 import { extractRepoDetails } from "../utils";
 
 export default function SearchForm() {

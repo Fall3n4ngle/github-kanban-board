@@ -1,2 +1,2 @@
 export { Repo } from "./components";
-export { reposSlice } from "./store";
+export { repoReducer, repoReducerPath } from "./store";

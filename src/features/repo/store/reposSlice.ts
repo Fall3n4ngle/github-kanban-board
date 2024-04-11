@@ -1,7 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../../app/store";
-import { getRepoId } from "../../../utils";
-import { fetchIssues } from "../../issues";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchRepo } from "./thunks";
 
 type Owner = {
   login: string;
@@ -22,51 +20,7 @@ type State = {
   repo: Repo | null;
 };
 
-export const fetchRepo = createAsyncThunk(
-  "repos/fetch",
-  async (
-    { owner, repo }: { owner: string; repo: string },
-    { rejectWithValue, dispatch }
-  ) => {
-    try {
-      const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}`,
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_PAT}`,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error();
-      }
-
-      const result: Repo & { has_issues: boolean } = await response.json();
-      
-      if (result.has_issues) {
-        dispatch(fetchIssues({ repo, owner }));
-      }
-
-      return {
-        repo: {
-          id: getRepoId({ owner, repo }),
-          name: result.name,
-          owner: {
-            login: result.owner.login,
-            html_url: result.owner.html_url,
-          },
-          stargazers_count: result.stargazers_count,
-          html_url: result.html_url,
-        } as Repo,
-      };
-    } catch {
-      rejectWithValue("Failed to fetch repository");
-    }
-  }
-);
-
-export const reposSlice = createSlice({
+const reposSlice = createSlice({
   name: "repos",
   initialState: {
     isLoading: false,
@@ -82,7 +36,8 @@ export const reposSlice = createSlice({
 
     builder.addCase(fetchRepo.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.repo = action.payload?.repo ?? null;
+      if (!action.payload) return;
+      state.repo = action.payload.repo;
     });
 
     builder.addCase(fetchRepo.rejected, (state, action) => {
@@ -92,6 +47,5 @@ export const reposSlice = createSlice({
   },
 });
 
-export const selectRepoStatus = (state: RootState) => state.repos.isLoading;
-export const selectRepoError = (state: RootState) => state.repos.error;
-export const selectRepo = (state: RootState) => state.repos.repo;
+export const { reducer: repoReducer, reducerPath: repoReducerPath } =
+  reposSlice;
