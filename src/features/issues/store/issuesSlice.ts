@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Issue } from "../types";
 import { getIssueStatus, getIssuesKey } from "../utils";
 import { fetchIssues } from "./thunks";
+import { swap } from "../../../utils";
 
 type State = {
   isLoading: boolean;
@@ -32,6 +33,17 @@ const issuesSlice = createSlice({
 
       state.data[from] = fromIssues.filter((issue) => issue.id !== id);
       state.data[to] = [issueToUpdate, ...toIssues];
+    },
+    swapIssues: (
+      state,
+      action: PayloadAction<{
+        index1: number;
+        index2: number;
+        issuesKey: string;
+      }>
+    ) => {
+      const { index1, index2, issuesKey } = action.payload;
+      state.data[issuesKey] = swap(state.data[issuesKey], index1, index2);
     },
   },
   extraReducers: (builder) => {
@@ -83,6 +95,6 @@ const issuesSlice = createSlice({
   },
 });
 
-export const { changeIssueStatus } = issuesSlice.actions;
+export const { changeIssueStatus, swapIssues } = issuesSlice.actions;
 export const { reducer: issuesReducer, reducerPath: issuesReducerPath } =
   issuesSlice;

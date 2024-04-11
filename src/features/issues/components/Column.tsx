@@ -56,8 +56,13 @@ export default function Column({ title, issuesKey }: Props) {
         overflow="auto"
         opacity={isOver ? 0.85 : 1}
       >
-        {issues?.map((issue) => (
-          <Issue key={issue.id} issuesKey={issuesKey} {...issue} />
+        {issues?.map((issue, index) => (
+          <Issue
+            key={issue.id}
+            issuesKey={issuesKey}
+            index={index}
+            {...issue}
+          />
         ))}
       </Stack>
     </Box>
