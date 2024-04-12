@@ -31,7 +31,7 @@ export const fetchIssues = createAsyncThunk(
       const repoId = getRepoId({ owner, repo });
       return { issues, repoId };
     } catch {
-      rejectWithValue("Failed to fetch issues");
+      return rejectWithValue("Failed to fetch issues");
     }
   }
 );

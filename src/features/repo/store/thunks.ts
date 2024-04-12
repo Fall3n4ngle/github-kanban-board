@@ -54,7 +54,7 @@ export const fetchRepo = createAsyncThunk(
         } as Repo,
       };
     } catch {
-      rejectWithValue("Failed to fetch repository");
+      return rejectWithValue("Failed to fetch repository");
     }
   }
 );
