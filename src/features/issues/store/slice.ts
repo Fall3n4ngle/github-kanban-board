@@ -4,7 +4,7 @@ import { getIssueStatus, getIssuesKey } from "../utils";
 import { fetchIssues } from "./thunks";
 import { swap } from "../../../utils";
 
-type State = {
+export type State = {
   isLoading: boolean;
   error: string | null;
   data: Record<string, Issue[]>;
@@ -101,6 +101,7 @@ const issuesSlice = createSlice({
 
     builder.addCase(fetchIssues.rejected, (state, { payload }) => {
       state.isLoading = false;
+      if (!payload) return;
       state.error = payload as string;
     });
   },

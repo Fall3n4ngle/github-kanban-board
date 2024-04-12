@@ -61,8 +61,10 @@ export default function Issue({
         (hoveredBoundingRect.bottom - hoveredBoundingRect.top) / 2;
 
       const mouseYRelativeToHovered = mouseY - hoveredBoundingRect.top;
+
       const isMouseYAboveHoveredMiddleHeight =
         mouseYRelativeToHovered < hoveredMiddleHeight;
+        
       const isMouseYBelowHoveredMiddleHeight =
         mouseYRelativeToHovered > hoveredMiddleHeight;
 

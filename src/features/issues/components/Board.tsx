@@ -4,7 +4,7 @@ import { selectRepo, selectRepoStatus } from "../../repo/store";
 import Column from "./Column";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { selectIssuesStatus } from "../store";
+import { selectIssuesError, selectIssuesStatus } from "../store";
 import ColumnSkeleton from "./ColumnSkeleton";
 import { IssueStatus } from "../types";
 import { getIssuesKey } from "../utils";
@@ -24,6 +24,15 @@ export default function Board() {
   const repo = useAppSelector(selectRepo);
   const isIssuesLoading = useAppSelector(selectIssuesStatus);
   const isRepoLoading = useAppSelector(selectRepoStatus);
+  const issuesError = useAppSelector(selectIssuesError);
+
+  if (issuesError) {
+    return (
+      <Heading textAlign="center" fontSize="x-large" color="red">
+        {issuesError}
+      </Heading>
+    );
+  }
 
   if (isIssuesLoading || isRepoLoading) {
     <SimpleGrid columns={3} spacing={4}>

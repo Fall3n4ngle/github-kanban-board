@@ -1,4 +1,4 @@
-import { Box, Heading, Stack } from "@chakra-ui/react";
+import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import { DragItem } from "../types";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { changeIssueStatus, selectIssuesByKey } from "../store";
@@ -56,14 +56,18 @@ export default function Column({ title, issuesKey }: Props) {
         overflow="auto"
         opacity={isOver ? 0.85 : 1}
       >
-        {issues?.map((issue, index) => (
-          <Issue
-            key={issue.id}
-            issuesKey={issuesKey}
-            index={index}
-            {...issue}
-          />
-        ))}
+        {issues.length > 0 ? (
+          issues.map((issue, index) => (
+            <Issue
+              key={issue.id}
+              issuesKey={issuesKey}
+              index={index}
+              {...issue}
+            />
+          ))
+        ) : (
+          <Text align="center" fontSize="lg">No isssues found</Text>
+        )}
       </Stack>
     </Box>
   );
