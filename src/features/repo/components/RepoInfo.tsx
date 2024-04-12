@@ -10,8 +10,8 @@ export default function RepoInfo() {
   const repoError = useAppSelector(selectRepoError);
 
   if (isLoading) return <Skeleton w={350} h={5} />;
-  if (!repo) return null;
   if (repoError) return <Text color="red">{repoError}</Text>;
+  if (!repo) return null;
 
   return (
     <HStack fontSize="large" spacing={8}>

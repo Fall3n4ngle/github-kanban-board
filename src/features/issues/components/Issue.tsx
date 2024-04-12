@@ -103,6 +103,7 @@ export default function Issue({
       width="100%"
       bg="white"
       opacity={isDragging ? 0.8 : 1}
+      minW={300}
     >
       <Heading fontSize="lg" mb={1}>
         {title}

@@ -47,7 +47,8 @@ export default function Column({ title, issuesKey }: Props) {
       </Heading>
       <Stack
         ref={dropRef}
-        h={{ base: 300, md: 600 }}
+        h={{ base: "max-content", lg: 600 }}
+        direction={{ base: "row", lg: "column" }}
         p={4}
         mt={2}
         spacing={4}
@@ -66,7 +67,9 @@ export default function Column({ title, issuesKey }: Props) {
             />
           ))
         ) : (
-          <Text align="center" fontSize="lg">No isssues found</Text>
+          <Text align="center" fontSize="lg">
+            No isssues found
+          </Text>
         )}
       </Stack>
     </Box>

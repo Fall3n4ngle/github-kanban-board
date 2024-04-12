@@ -1,4 +1,4 @@
-export function extractRepoDetails(url: string) {
+export function getRepoDetails(url: string) {
   const match = url.match(/https:\/\/github\.com\/([^/]+)\/([^/]+)/);
 
   if (match) {

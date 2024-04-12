@@ -5,35 +5,21 @@ import {
   FormLabel,
   VisuallyHidden,
   HStack,
-  FormErrorMessage,
 } from "@chakra-ui/react";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useAppDispatch } from "../../../app/hooks";
 import { fetchRepo } from "../store";
-import { extractRepoDetails } from "../utils";
+import { getRepoDetails } from "../utils";
 
 export default function SearchForm() {
   const [repoUrl, setRepoUrl] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const dispatch = useAppDispatch();
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-
-    if (extractRepoDetails(value) && error) {
-      setError(null);
-    }
-
-    setRepoUrl(value);
-  };
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    setError(null);
-    const details = extractRepoDetails(repoUrl);
+    const details = getRepoDetails(repoUrl);
 
     if (!details) {
-      setError("Invalid repo url");
       return;
     }
 
@@ -42,20 +28,22 @@ export default function SearchForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <FormControl isRequired isInvalid={!!error}>
-        <HStack>
+      <HStack>
+        <FormControl isRequired>
           <VisuallyHidden>
             <FormLabel>Github repo url</FormLabel>
           </VisuallyHidden>
           <Input
+            type="url"
             placeholder="Enter repo url"
             value={repoUrl}
-            onChange={handleChange}
+            onChange={(e) => setRepoUrl(e.target.value)}
+            pattern="https:\/\/github\.com\/[^\/]+\/[^\/]+"
+            title="Enter a valid GitHub repository URL"
           />
-          <Button type="submit">Load issues</Button>
-        </HStack>
-        {error && <FormErrorMessage>{error}</FormErrorMessage>}
-      </FormControl>
+        </FormControl>
+        <Button type="submit">Load issues</Button>
+      </HStack>
     </form>
   );
 }
