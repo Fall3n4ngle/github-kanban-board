@@ -9,7 +9,7 @@ export default function RepoInfo() {
   const repo = useAppSelector(selectRepo);
   const repoError = useAppSelector(selectRepoError);
 
-  if (isLoading) return <Skeleton w={350} h={5} />;
+  if (isLoading) return <Skeleton data-testid="loader" w={350} h={5} />;
   if (repoError) return <Text color="red">{repoError}</Text>;
   if (!repo) return null;
 
