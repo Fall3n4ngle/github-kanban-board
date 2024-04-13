@@ -64,9 +64,11 @@ const issuesSlice = createSlice({
       if (!state.data[todoKey]) {
         state.data[todoKey] = [];
       }
+
       if (!state.data[inProgressKey]) {
         state.data[inProgressKey] = [];
       }
+      
       if (!state.data[doneKey]) {
         state.data[doneKey] = [];
       }
@@ -93,6 +95,7 @@ const issuesSlice = createSlice({
           created_at: issue.created_at,
           number: issue.number,
           user: issue.user,
+          html_url: issue.html_url,
         };
 
         state.data[key].push(newIssue);

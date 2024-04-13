@@ -3,6 +3,7 @@ export type Issue = {
   title: string;
   number: number;
   created_at: Date;
+  html_url: string;
   user: {
     login: string;
   };

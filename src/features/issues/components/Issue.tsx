@@ -1,4 +1,4 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Link, Text } from "@chakra-ui/react";
 import { DragItem, Issue as TIssue } from "../types";
 import { formatIssueDate } from "../utils";
 import { XYCoord, useDrag, useDrop } from "react-dnd";
@@ -21,11 +21,12 @@ export default function Issue({
   id,
   issuesKey,
   index,
+  html_url,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
 
-  const [{ isDragging }, drag] = useDrag<
+  const [, drag] = useDrag<
     DragItem,
     void,
     {
@@ -34,9 +35,6 @@ export default function Issue({
   >({
     type: dragAndDropKey,
     item: { from: issuesKey, id, index },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
   });
 
   const [, drop] = useDrop<DragItem, void, unknown>({
@@ -58,13 +56,13 @@ export default function Issue({
       const hoveredBoundingRect = ref.current.getBoundingClientRect();
 
       const hoveredMiddleHeight =
-        (hoveredBoundingRect.bottom - hoveredBoundingRect.top) / 2;
+        (hoveredBoundingRect.bottom - hoveredBoundingRect.top) / 1.5;
 
       const mouseYRelativeToHovered = mouseY - hoveredBoundingRect.top;
 
       const isMouseYAboveHoveredMiddleHeight =
         mouseYRelativeToHovered < hoveredMiddleHeight;
-        
+
       const isMouseYBelowHoveredMiddleHeight =
         mouseYRelativeToHovered > hoveredMiddleHeight;
 
@@ -102,17 +100,27 @@ export default function Issue({
       cursor="grab"
       width="100%"
       bg="white"
-      opacity={isDragging ? 0.8 : 1}
       minW={300}
     >
-      <Heading fontSize="lg" mb={1}>
+      <Heading fontSize="lg" mb={2}>
         {title}
       </Heading>
-      <Text color="GrayText" mb={2} fontSize="sm">
-        #{number} {date}
+      <Text color="GrayText" mb={2}>
+        <Link href={html_url} color="blue" fontWeight="500">
+          #{number}
+        </Link>
+        <Text ml={2} as="span" fontSize="sm">
+          {date}
+        </Text>
       </Text>
       <Text>
-        {user.login} | Comments: {comments}
+        <Text as="span" mr={1}>
+          {user.login}
+        </Text>{" "}
+        |{" "}
+        <Text as="span" ml={1}>
+          Comments: {comments}
+        </Text>
       </Text>
     </Box>
   );

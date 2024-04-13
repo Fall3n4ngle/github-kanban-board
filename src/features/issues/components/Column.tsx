@@ -55,7 +55,7 @@ export default function Column({ title, issuesKey }: Props) {
         bgColor="gray.100"
         rounded="md"
         overflow="auto"
-        opacity={isOver ? 0.85 : 1}
+        opacity={isOver ? 0.7 : 1}
       >
         {issues.length > 0 ? (
           issues.map((issue, index) => (

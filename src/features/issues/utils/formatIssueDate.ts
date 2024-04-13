@@ -3,18 +3,18 @@ export function formatIssueDate(date: Date) {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
   if (diffDays > 1) {
-    return `${diffDays} days ago`;
+    return `opened ${diffDays} days ago`;
   }
 
   if (diffDays === 1) {
-    return `1 day ago`;
+    return `opened 1 day ago`;
   }
 
   const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
 
   if (diffHours > 1) {
-    return `${diffHours} hours ago`;
+    return `opened ${diffHours} hours ago`;
   }
 
-  return `less than 1 hour ago`;
+  return `opened less than 1 hour ago`;
 }
