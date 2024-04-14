@@ -23,12 +23,7 @@ export const fetchRepo = createAsyncThunk(
   ) => {
     try {
       const response = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}`,
-        {
-          headers: {
-            Authorization: `Bearer ${import.meta.env.VITE_PAT}`,
-          },
-        }
+        `https://api.github.com/repos/${owner}/${repo}`
       );
 
       if (!response.ok) {
