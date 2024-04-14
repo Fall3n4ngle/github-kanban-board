@@ -31,6 +31,7 @@ describe("test issues slice's extraReducers", () => {
           number: 1,
           state: "open",
           assignee: null,
+          html_url: "test url",
           user: {
             login: "user1",
           },
@@ -43,6 +44,7 @@ describe("test issues slice's extraReducers", () => {
           state: "open",
           assignee: {},
           number: 2,
+          html_url: "test url",
           user: {
             login: "user2",
           },
@@ -55,6 +57,7 @@ describe("test issues slice's extraReducers", () => {
           state: "closed",
           assignee: null,
           number: 3,
+          html_url: "test url",
           user: {
             login: "user3",
           },
@@ -73,6 +76,7 @@ describe("test issues slice's extraReducers", () => {
           comments: 1,
           created_at: "",
           number: 1,
+          html_url: "test url",
           user: {
             login: "user1",
           },
@@ -85,6 +89,7 @@ describe("test issues slice's extraReducers", () => {
           comments: 2,
           created_at: "",
           number: 2,
+          html_url: "test url",
           user: {
             login: "user2",
           },
@@ -97,6 +102,7 @@ describe("test issues slice's extraReducers", () => {
           comments: 3,
           created_at: "",
           number: 3,
+          html_url: "test url",
           user: {
             login: "user3",
           },
@@ -131,6 +137,7 @@ describe("test issues slice's reducers", () => {
           comments: 1,
           created_at,
           number: 1,
+          html_url: "test url",
           user: {
             login: "user1",
           },
@@ -143,6 +150,7 @@ describe("test issues slice's reducers", () => {
           comments: 2,
           created_at,
           number: 2,
+          html_url: "test url",
           user: {
             login: "user2",
           },
@@ -155,6 +163,7 @@ describe("test issues slice's reducers", () => {
           comments: 3,
           created_at,
           number: 3,
+          html_url: "test url",
           user: {
             login: "user3",
           },
@@ -165,6 +174,7 @@ describe("test issues slice's reducers", () => {
           comments: 3,
           created_at,
           number: 3,
+          html_url: "test url",
           user: {
             login: "user3",
           },
@@ -192,6 +202,7 @@ describe("test issues slice's reducers", () => {
             comments: 2,
             created_at,
             number: 2,
+            html_url: "test url",
             user: {
               login: "user2",
             },
@@ -204,6 +215,7 @@ describe("test issues slice's reducers", () => {
             comments: 1,
             created_at,
             number: 1,
+            html_url: "test url",
             user: {
               login: "user1",
             },
@@ -214,6 +226,7 @@ describe("test issues slice's reducers", () => {
             comments: 3,
             created_at,
             number: 3,
+            html_url: "test url",
             user: {
               login: "user3",
             },
@@ -224,6 +237,7 @@ describe("test issues slice's reducers", () => {
             comments: 3,
             created_at,
             number: 3,
+            html_url: "test url",
             user: {
               login: "user3",
             },
@@ -251,6 +265,7 @@ describe("test issues slice's reducers", () => {
             comments: 1,
             created_at,
             number: 1,
+            html_url: "test url",
             user: {
               login: "user1",
             },
@@ -263,6 +278,7 @@ describe("test issues slice's reducers", () => {
             comments: 2,
             created_at,
             number: 2,
+            html_url: "test url",
             user: {
               login: "user2",
             },
@@ -275,6 +291,7 @@ describe("test issues slice's reducers", () => {
             comments: 3,
             created_at,
             number: 3,
+            html_url: "test url",
             user: {
               login: "user3",
             },
@@ -285,6 +302,7 @@ describe("test issues slice's reducers", () => {
             comments: 3,
             created_at,
             number: 3,
+            html_url: "test url",
             user: {
               login: "user3",
             },

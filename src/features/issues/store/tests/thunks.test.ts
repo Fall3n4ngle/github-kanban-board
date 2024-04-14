@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from "vitest";
+import { Mock, describe, expect, test, vi } from "vitest";
 import { fetchIssues } from "../thunks";
 
 global.fetch = vi.fn();
@@ -20,7 +20,8 @@ describe("test fetch issues thunk", () => {
       },
     ];
 
-    fetch.mockResolvedValue({
+    // eslint-disable-next-line
+    (fetch as Mock<any, unknown>).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(mockIssues),
     });
@@ -41,7 +42,8 @@ describe("test fetch issues thunk", () => {
   });
 
   test("should handle rejected response", async () => {
-    fetch.mockResolvedValue({
+    // eslint-disable-next-line
+    (fetch as Mock<any, unknown>).mockResolvedValue({
       ok: false,
     });
 
