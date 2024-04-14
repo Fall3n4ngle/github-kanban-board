@@ -4,7 +4,7 @@ import { getIssueStatus, getIssuesKey } from "../utils";
 import { fetchIssues } from "./thunks";
 import { swap } from "../utils";
 
-export type State = {
+type State = {
   isLoading: boolean;
   error: string | null;
   data: Record<string, Issue[]>;
