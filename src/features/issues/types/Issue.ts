@@ -2,7 +2,7 @@ export type Issue = {
   id: number;
   title: string;
   number: number;
-  created_at: Date;
+  created_at: string;
   html_url: string;
   user: {
     login: string;

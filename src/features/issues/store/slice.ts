@@ -53,7 +53,6 @@ const issuesSlice = createSlice({
     });
 
     builder.addCase(fetchIssues.fulfilled, (state, action) => {
-      state.isLoading = false;
       if (!action.payload) return;
       const { issues, repoId } = action.payload;
 
@@ -100,6 +99,8 @@ const issuesSlice = createSlice({
 
         state.data[key].push(newIssue);
       });
+
+      state.isLoading = false;
     });
 
     builder.addCase(fetchIssues.rejected, (state, { payload }) => {

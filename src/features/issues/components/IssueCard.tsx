@@ -12,7 +12,7 @@ type Props = TIssue & {
   index: number;
 };
 
-export default function Issue({
+export default function IssueCard({
   title,
   user,
   comments,
@@ -106,7 +106,7 @@ export default function Issue({
         {title}
       </Heading>
       <Text color="GrayText" mb={2}>
-        <Link href={html_url} color="blue" fontWeight="500">
+        <Link href={html_url} target="_blank" color="blue" fontWeight="500">
           #{number}
         </Link>
         <Text ml={2} as="span" fontSize="sm">

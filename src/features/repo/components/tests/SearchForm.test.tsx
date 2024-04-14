@@ -49,6 +49,7 @@ describe("test SearchForm component", () => {
     >;
 
     const action = await thunk(store.dispatch, store.getState, {});
+    expect(action.type.indexOf("repos/fetch")).toBe(0);
     expect(action.meta.arg).toEqual({ owner: "user", repo: "repo" });
   });
 });

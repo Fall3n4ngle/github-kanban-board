@@ -2,7 +2,7 @@ import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import { DragItem } from "../types";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { changeIssueStatus, selectIssuesByKey } from "../store";
-import Issue from "./Issue";
+import IssueCard from "./IssueCard";
 import { useDrop } from "react-dnd";
 import { dragAndDropKey } from "../const";
 
@@ -59,7 +59,7 @@ export default function Column({ title, issuesKey }: Props) {
       >
         {issues.length > 0 ? (
           issues.map((issue, index) => (
-            <Issue
+            <IssueCard
               key={issue.id}
               issuesKey={issuesKey}
               index={index}

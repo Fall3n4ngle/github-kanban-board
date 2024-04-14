@@ -1,4 +1,4 @@
-export function formatIssueDate(date: Date) {
+export function formatIssueDate(date: string) {
   const diffTime = Math.abs(new Date().getTime() - new Date(date).getTime());
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 

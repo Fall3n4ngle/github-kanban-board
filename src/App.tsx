@@ -1,6 +1,6 @@
 import { Container } from "@chakra-ui/react";
 import { Repo } from "./features/repo";
-import { Board } from "./features/issues";
+import { Issues } from "./features/issues";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       gap={10}
     >
       <Repo />
-      <Board />
+      <Issues />
     </Container>
   );
 }
