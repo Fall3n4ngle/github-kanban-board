@@ -36,7 +36,7 @@ export default function Column({ title, issuesKey }: Props) {
   });
 
   return (
-    <Box>
+    <Box data-testid={issuesKey}>
       <Heading
         fontSize="x-large"
         mb={4}

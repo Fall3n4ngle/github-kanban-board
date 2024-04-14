@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchIssues } from "../../issues";
-import { getRepoId } from "../../../utils";
+import { fetchIssues } from "@/features/issues";
+import { getRepoId } from "@/utils";
 
 type Owner = {
   login: string;

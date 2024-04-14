@@ -23,8 +23,8 @@ describe("test SearchForm component", () => {
       </Provider>
     );
 
-    expect(getByPlaceholderText("Enter repo url")).not.toBeNull();
-    expect(getByText("Load issues")).not.toBeNull();
+    expect(getByPlaceholderText("Enter repo url")).toBeInTheDocument();
+    expect(getByText("Load issues")).toBeInTheDocument();
   });
 
   test("dispatches fetchRepo action on form submit", async () => {

@@ -3,19 +3,13 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { getIssuesKey } from "../utils";
 import Column from "./Column";
-import { IssueStatus } from "../types";
-
-type TColumn = {
-  issuesStatus: IssueStatus;
-  title: string;
-};
+import { columns } from "../const";
 
 type Props = {
-  columns: TColumn[];
   repoId: string;
 };
 
-export default function Board({ columns, repoId }: Props) {
+export default function Board({ repoId }: Props) {
   return (
     <DndProvider backend={HTML5Backend}>
       <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 16, md: 4 }}>

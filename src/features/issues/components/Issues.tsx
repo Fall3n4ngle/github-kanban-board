@@ -7,19 +7,8 @@ import {
 } from "@/features/repo/store";
 import { selectIssuesError, selectIssuesStatus } from "../store";
 import ColumnSkeleton from "./ColumnSkeleton";
-import { IssueStatus } from "../types";
 import Board from "./Board";
-
-type TColumn = {
-  issuesStatus: IssueStatus;
-  title: string;
-};
-
-const columns: TColumn[] = [
-  { issuesStatus: "todo", title: "Todo" },
-  { issuesStatus: "in_progress", title: "In Progress" },
-  { issuesStatus: "done", title: "Done" },
-];
+import { columns } from "../const";
 
 export default function Issues() {
   const repo = useAppSelector(selectRepo);
@@ -56,5 +45,5 @@ export default function Issues() {
     );
   }
 
-  return <Board columns={columns} repoId={repo.id} />;
+  return <Board repoId={repo.id} />;
 }

@@ -26,7 +26,7 @@ describe("test RepoInfo component", () => {
       </Provider>
     );
 
-    expect(screen.getByTestId("loader")).not.toBeNull();
+    expect(screen.getByTestId("loader")).toBeInTheDocument();
   });
 
   test("renders correctly when there is an error", () => {
@@ -49,7 +49,7 @@ describe("test RepoInfo component", () => {
       </Provider>
     );
 
-    expect(screen.getByText("Network error")).not.toBeNull();
+    expect(screen.getByText("Network error")).toBeInTheDocument();
   });
 
   test("renders correctly when there is a repo", () => {
@@ -81,8 +81,8 @@ describe("test RepoInfo component", () => {
       </Provider>
     );
 
-    expect(screen.getByText("test")).not.toBeNull();
-    expect(screen.getByText("test-repo")).not.toBeNull();
-    expect(screen.getByText("1 k stars")).not.toBeNull();
+    expect(screen.getByText("test")).toBeInTheDocument();
+    expect(screen.getByText("test-repo")).toBeInTheDocument();
+    expect(screen.getByText("1 k stars")).toBeInTheDocument();
   });
 });

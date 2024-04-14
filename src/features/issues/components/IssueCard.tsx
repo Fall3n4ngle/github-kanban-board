@@ -101,6 +101,7 @@ export default function IssueCard({
       width="100%"
       bg="white"
       minW={300}
+      data-testid={id}
     >
       <Heading fontSize="lg" mb={2}>
         {title}
