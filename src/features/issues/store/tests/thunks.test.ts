@@ -34,11 +34,14 @@ describe("test fetch issues thunk", () => {
     const calls = dispatch.mock.calls;
     expect(calls).toHaveLength(2);
 
-    const [start, end] = calls;
+    const [issuesPending, issuesFulfilled] = calls;
 
-    expect(start[0].type).toBe(fetchIssues.pending.type);
-    expect(end[0].type).toBe(fetchIssues.fulfilled.type);
-    expect(end[0].payload).toEqual({ issues: mockIssues, repoId: "test_test" });
+    expect(issuesPending[0].type).toBe(fetchIssues.pending.type);
+    expect(issuesFulfilled[0].type).toBe(fetchIssues.fulfilled.type);
+    expect(issuesFulfilled[0].payload).toEqual({
+      issues: mockIssues,
+      repoId: "test_test",
+    });
   });
 
   test("should handle rejected response", async () => {
@@ -55,10 +58,10 @@ describe("test fetch issues thunk", () => {
     const calls = dispatch.mock.calls;
     expect(calls).toHaveLength(2);
 
-    const [start, end] = calls;
+    const [issuesPending, issuesRejected] = calls;
 
-    expect(start[0].type).toBe(fetchIssues.pending.type);
-    expect(end[0].type).toBe(fetchIssues.rejected.type);
-    expect(end[0].payload).toBe("Failed to fetch issues");
-  })
+    expect(issuesPending[0].type).toBe(fetchIssues.pending.type);
+    expect(issuesRejected[0].type).toBe(fetchIssues.rejected.type);
+    expect(issuesRejected[0].payload).toBe("Failed to fetch issues");
+  });
 });
