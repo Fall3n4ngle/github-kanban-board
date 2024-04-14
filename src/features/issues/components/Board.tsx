@@ -12,7 +12,11 @@ type Props = {
 export default function Board({ repoId }: Props) {
   return (
     <DndProvider backend={HTML5Backend}>
-      <SimpleGrid columns={{ base: 1, lg: 3 }} spacing={{ base: 16, md: 4 }}>
+      <SimpleGrid
+        data-testid="board"
+        columns={{ base: 1, lg: 3 }}
+        spacing={{ base: 16, md: 4 }}
+      >
         {columns.map((column) => {
           const issuesKey = getIssuesKey({
             repoId,

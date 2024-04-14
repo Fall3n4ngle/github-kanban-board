@@ -27,7 +27,11 @@ export default function Issues() {
 
   if (isIssuesLoading || isRepoLoading) {
     return (
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 16, md: 4 }}>
+      <SimpleGrid
+        data-testid="loader"
+        columns={{ base: 1, md: 3 }}
+        spacing={{ base: 16, md: 4 }}
+      >
         {columns.map((column, index) => (
           <ColumnSkeleton key={index} title={column.title} />
         ))}
