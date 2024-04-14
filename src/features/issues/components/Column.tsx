@@ -1,6 +1,6 @@
 import { Box, Heading, Stack, Text } from "@chakra-ui/react";
 import { DragItem } from "../types";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { changeIssueStatus, selectIssuesByKey } from "../store";
 import IssueCard from "./IssueCard";
 import { useDrop } from "react-dnd";

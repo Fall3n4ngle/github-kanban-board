@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { GuthubIssueState, Issue } from "../types";
-import { getRepoId } from "../../../utils";
+import { getRepoId } from "@/utils";
 
 type GuthubIssue = Issue & {
   state: GuthubIssueState;

@@ -7,12 +7,13 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { FormEvent, useState } from "react";
-import { useAppDispatch } from "../../../app/hooks";
-import { fetchRepo } from "../store";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { fetchRepo, selectRepoStatus } from "../store";
 import { getRepoDetails } from "../utils";
 
 export default function SearchForm() {
   const [repoUrl, setRepoUrl] = useState("");
+  const isRepoLoading = useAppSelector(selectRepoStatus);
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: FormEvent) => {
@@ -20,6 +21,11 @@ export default function SearchForm() {
     const details = getRepoDetails(repoUrl);
 
     if (!details) {
+      dispatch({
+        type: fetchRepo.rejected.type,
+        payload: "failed to get repo details",
+      });
+      
       return;
     }
 
@@ -42,7 +48,9 @@ export default function SearchForm() {
             title="Enter a valid GitHub repository URL"
           />
         </FormControl>
-        <Button type="submit">Load issues</Button>
+        <Button type="submit" disabled={isRepoLoading}>
+          Load issues
+        </Button>
       </HStack>
     </form>
   );

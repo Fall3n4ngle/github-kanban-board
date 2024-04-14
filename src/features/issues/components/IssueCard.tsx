@@ -4,7 +4,7 @@ import { formatIssueDate } from "../utils";
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useRef } from "react";
 import { dragAndDropKey } from "../const";
-import { useAppDispatch } from "../../../app/hooks";
+import { useAppDispatch } from "@/app/hooks";
 import { swapIssues } from "../store";
 
 type Props = TIssue & {

@@ -124,7 +124,7 @@ describe("test issues slice's extraReducers", () => {
 });
 
 describe("test issues slice's reducers", () => {
-  const created_at = new Date();
+  const created_at = "";
 
   const initialState = {
     isLoading: false,

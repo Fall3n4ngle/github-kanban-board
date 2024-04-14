@@ -1,6 +1,6 @@
 import { Container } from "@chakra-ui/react";
-import { Repo } from "./features/repo";
-import { Issues } from "./features/issues";
+import { Issues } from "@/features/issues";
+import { Repo } from "@/features/repo";
 
 function App() {
   return (

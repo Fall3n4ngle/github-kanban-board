@@ -1,10 +1,10 @@
 import { Heading, SimpleGrid } from "@chakra-ui/react";
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import {
   selectRepo,
   selectRepoError,
   selectRepoStatus,
-} from "../../repo/store";
+} from "@/features/repo/store";
 import { selectIssuesError, selectIssuesStatus } from "../store";
 import ColumnSkeleton from "./ColumnSkeleton";
 import { IssueStatus } from "../types";

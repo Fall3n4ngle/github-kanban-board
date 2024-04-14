@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../../app/hooks";
+import { useAppSelector } from "@/app/hooks";
 import { selectRepo, selectRepoError, selectRepoStatus } from "../store";
 import { HStack, Link, Text, Skeleton } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";

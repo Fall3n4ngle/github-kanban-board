@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Issue } from "../types";
 import { getIssueStatus, getIssuesKey } from "../utils";
 import { fetchIssues } from "./thunks";
-import { swap } from "../../../utils";
+import { swap } from "../utils";
 
 export type State = {
   isLoading: boolean;
